@@ -1,0 +1,26 @@
+.tableHeader {
+  text-align: center;
+  /* background-color: #ef4e42; */
+  /* color: gainsboro; */
+}
+
+.orderCardContainer {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  justify-content: space-around;
+}
+
+.menuConnecting {
+  color: firebrick;
+}
+
+.menuReady {
+  color: darkgreen;
+}
+
+.menuSent {
+  color: black;
+}
