@@ -25,11 +25,11 @@ const mockOrder = [
 ]
 
 const menu = {
-  0: 'Best fish',
-  1: 'Smelly Burger',
-  2: 'Super burrito',
-  3: 'Square watermelon',
-  4: 'Salty churro',
+  0: 'flaming hot cheetos',
+  1: 'tejava',
+  2: 'coke zero',
+  3: 'fruit snack',
+  4: 'dried seaweed',
 }
 
 export default class TableView extends Component {
@@ -53,7 +53,7 @@ export default class TableView extends Component {
 
     return (
       <div>
-        <Header menuState={menuState}/>
+        <Header menuState={menuState} submitHandler={ () => {this.submitTableOrder()} }/>
         <div className='orderCardContainer'>
           {
             order.map((items, customerNumber) => {
@@ -82,9 +82,7 @@ export default class TableView extends Component {
     const tableView = this
 
     orderStream.onopen = function(e) {
-      console.log('connection open', e)
       tableView.setState({menuState: this.readyState})
-      console.log('tableView.state.menuState:', tableView.state.menuState)
     }
 
     orderStream.addEventListener(streamEvents.UPDATE, (e) => this.updateOrder(e))
@@ -108,16 +106,29 @@ export default class TableView extends Component {
   }
 
   submitOrder(e) {
-    console.log('Submit event', e)
     let orders = this.state.order.slice(0)
     orders.push([])
-    console.log('this.state.activeCustomer:', this.state.activeCustomer)
     const nextCustomer = this.state.activeCustomer + 1
-    console.log('this.state.activeCustomer:', this.state.activeCustomer)
-    console.log('nextCustomer:', nextCustomer)
     this.setState({
       activeCustomer: nextCustomer,
       order: orders,
     })
+  }
+
+  submitTableOrder() {
+    const {
+      order
+    } = this.state
+
+    Meteor.call('sendTableOrder', {tableOrder: order}, (err, res) => {
+      if(err) {
+        console.error(err)
+      } else {
+        console.log('Success', res)
+      }
+
+    })
+    console.log('order:', order)
+    console.log('hey')
   }
 }

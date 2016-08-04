@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import classNames from 'classnames'
 import './styles.css'
 
 export default class OrderCard extends Component {
@@ -10,14 +11,14 @@ export default class OrderCard extends Component {
     } = this.props
 
     return (
-      <div className='orderCard'>
+      <div className={classNames('orderCard', {ordering: ordering})}>
         <div className='orderCardHeader'>
           <h2 className='customerName'>Customer #{orderNumber}</h2>
           {this.renderOrderStatus(ordering)}
         </div>
         {
           items.map((item, i) => {
-            return <div key={`item-${i}`}>{item}</div>
+            return <div className='item' key={`item-${i}`}>{(i+1)}. {item}</div>
           })
         }
       </div>
