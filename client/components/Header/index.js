@@ -4,13 +4,16 @@ import './styles.css'
 export default class OrderCard extends Component {
   render() {
     const {
-      menuState
+      menuState,
+      submitHandler
     } = this.props
 
     return (
-      <div className='header'>
-        <div className="orderButton">Place Order</div>
-        <h1 className='title'>Placing Order - {this.renderMenuReadyState(menuState)}</h1>
+      <div className="headerWrapper">
+        <div className='header'>
+          <div onClick={submitHandler} className="orderButton">Place Order</div>
+          <h1 className='title'>Placing Order - {this.renderMenuReadyState(menuState)}</h1>
+        </div>
       </div>
     )
   }
@@ -30,4 +33,5 @@ export default class OrderCard extends Component {
 OrderCard.proptypes = {
   mode: PropTypes.string,
   menuState: PropTypes.number,
+  submitHandler: PropTypes.func,
 }

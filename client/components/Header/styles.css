@@ -16,6 +16,11 @@
   font-size: 2em;
   color: white;
   border-radius: 5px;
+  cursor: pointer;
+  -webkit-transform: translateY(-10px);
+  -ms-transform: translateY(-10px);
+  -o-transform: translateY(-10px);
+  transform: translateY(-10px);
 }
 
 .menuConnecting {

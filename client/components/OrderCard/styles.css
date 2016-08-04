@@ -4,6 +4,15 @@
   margin: 15px;
   padding: 5px 20px 20px 20px;
   width: 25%;
+  cursor: pointer;
+}
+
+.orderCard:hover {
+  border: 1.5px solid black;
+}
+
+.orderCard.ordering {
+
 }
 
 .orderCardHeader {
@@ -30,5 +39,5 @@
 .ready {
   margin-top: auto;
   margin-bottom: auto;
-  color: darkgreen;
+  color: lightgreen;
 }

@@ -25,11 +25,11 @@ const mockOrder = [
 ]
 
 const menu = {
-  0: 'Best fish',
-  1: 'Smelly Burger',
-  2: 'Super burrito',
-  3: 'Square watermelon',
-  4: 'Salty churro',
+  0: 'flaming hot cheetos',
+  1: 'tejava',
+  2: 'coke zero',
+  3: 'fruit snack',
+  4: 'dried seaweed',
 }
 
 export default class TableView extends Component {
@@ -53,7 +53,7 @@ export default class TableView extends Component {
 
     return (
       <div>
-        <Header menuState={menuState}/>
+        <Header menuState={menuState} submitHandler={ () => {this.submitTableOrder()} }/>
         <div className='orderCardContainer'>
           {
             order.map((items, customerNumber) => {
@@ -119,5 +119,14 @@ export default class TableView extends Component {
       activeCustomer: nextCustomer,
       order: orders,
     })
+  }
+
+  submitTableOrder() {
+    const {
+      order
+    } = this.state
+
+    console.log('order:', order)
+    console.log('hey')
   }
 }
