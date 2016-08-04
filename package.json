@@ -12,7 +12,14 @@
   },
   "postcss": {
     "plugins": {
-      "autoprefixer": {"browsers": ["last 2 versions"]}
+      "autoprefixer": {
+        "browsers": [
+          "last 2 versions"
+        ]
+      }
     }
+  },
+  "devDependencies": {
+    "babel-eslint": "^6.1.2"
   }
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import OrderCard from '../OrderCard'
+import Header from '../Header'
 import './styles.css'
 // import espoly from 'event-source-polyfill'
 
@@ -35,7 +36,7 @@ export default class TableView extends Component {
   constructor() {
     super()
     this.state = {
-      menuReadyState: 0,
+      menuState: 0,
       order: [[]],
       activeCustomer: 0,
     }
@@ -44,31 +45,31 @@ export default class TableView extends Component {
 
   render() {
     // const order = mockOrder
-    const order = this.state.order
+    const {
+      order,
+      activeCustomer,
+      menuState,
+    } = this.state
 
     return (
       <div>
-        <h1 className='tableHeader'>Placing Order - {this.renderMenuReadyState(this.state.menuReadyState)}</h1>
+        <Header menuState={menuState}/>
         <div className='orderCardContainer'>
           {
             order.map((items, customerNumber) => {
-              return <OrderCard orderNumber={customerNumber + 1} items={items} key={`order${customerNumber}`}/>
+              return (
+                <OrderCard
+                  ordering={customerNumber === activeCustomer}
+                  orderNumber={customerNumber + 1}
+                  items={items}
+                  key={`order${customerNumber}`}
+                />
+              )
             })
           }
         </div>
       </div>
     )
-  }
-
-  renderMenuReadyState(readyState) {
-    switch(readyState) {
-      case 1:
-        return <span className='menuReady'>Ready to order</span>
-      case 2:
-        return <span className='menuSent'>Order placed</span>
-      default:
-        return <span className='menuConnecting'>Connecting menus</span>
-    }
   }
 
   initOrderListener() {
@@ -82,8 +83,8 @@ export default class TableView extends Component {
 
     orderStream.onopen = function(e) {
       console.log('connection open', e)
-      tableView.setState({menuReadyState: this.readyState})
-      console.log('tableView.state.menuReadyState:', tableView.state.menuReadyState)
+      tableView.setState({menuState: this.readyState})
+      console.log('tableView.state.menuState:', tableView.state.menuState)
     }
 
     orderStream.addEventListener(streamEvents.UPDATE, (e) => this.updateOrder(e))

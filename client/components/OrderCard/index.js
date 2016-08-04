@@ -6,14 +6,14 @@ export default class OrderCard extends Component {
     const {
       orderNumber,
       items,
-      status
+      ordering
     } = this.props
 
     return (
       <div className='orderCard'>
         <div className='orderCardHeader'>
           <h2 className='customerName'>Customer #{orderNumber}</h2>
-          {this.renderOrderStatus(status)}
+          {this.renderOrderStatus(ordering)}
         </div>
         {
           items.map((item, i) => {
@@ -24,24 +24,15 @@ export default class OrderCard extends Component {
     )
   }
 
-  renderOrderStatus(statusCode) {
-    const orderStatus = {
-      IN_PROGRESS: 0,
-      COMPLETE: 1,
-    }
-
-    switch(statusCode) {
-      // case orderStatus.IN_PROGRESS:
-      case orderStatus.COMPLETE:
-        return <div className='ready'>Ready</div>
-      default:
-        return <div className='notReady'>Ordering</div>
-    }
+  renderOrderStatus(ordering) {
+    return ordering ?
+      <div className='notReady'>Ordering</div>
+      : <div className='ready'>Ready</div>
   }
 }
 
 OrderCard.proptypes = {
   orderNumber: PropTypes.number,
   items: PropTypes.array,
-  status: PropTypes.number
+  ordering: PropTypes.bool
 }

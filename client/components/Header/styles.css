@@ -1,0 +1,31 @@
+.header {
+  position: relative;
+  text-align: center;
+}
+
+.title {
+  /* display: inline-block; */
+  /* color: gainsboro; */
+}
+
+.orderButton {
+  background-color: #ef4e42;
+  position: absolute;
+  right: 0;
+  padding: 10px 30px;
+  font-size: 2em;
+  color: white;
+  border-radius: 5px;
+}
+
+.menuConnecting {
+  color: firebrick;
+}
+
+.menuReady {
+  color: darkgreen;
+}
+
+.menuSent {
+  color: black;
+}
