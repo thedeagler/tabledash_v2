@@ -9,5 +9,8 @@ Meteor.startup(() => {
       console.log('order:', order)
       return 'success';
     }
+    getStatus: function(){
+        	return orderStatus;
+        }
   });
 });
