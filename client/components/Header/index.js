@@ -1,18 +1,33 @@
 import React, { Component, PropTypes } from 'react'
+import { orderStates } from '../constants.js'
 import './styles.css'
 
-export default class OrderCard extends Component {
+export default class Header extends Component {
   render() {
     const {
       menuState,
+      orderStatus,
       submitHandler
     } = this.props
+
+    let titleBar
+    switch (orderStatus) {
+      case orderStates.ORDER_SENT:
+        titleBar = <h1 className='title'>Preparing Order...</h1>
+        break;
+      case orderStates.ORDERING:
+      default:
+        titleBar = [
+          <div onClick={submitHandler} className="orderButton">Place Order</div>,
+          <h1 className='title'>Placing Order - {this.renderMenuReadyState(menuState)}</h1>,
+        ]
+        break;
+    }
 
     return (
       <div className="headerWrapper">
         <div className='header'>
-          <div onClick={submitHandler} className="orderButton">Place Order</div>
-          <h1 className='title'>Placing Order - {this.renderMenuReadyState(menuState)}</h1>
+          {titleBar}
         </div>
       </div>
     )
@@ -30,8 +45,9 @@ export default class OrderCard extends Component {
   }
 }
 
-OrderCard.proptypes = {
+Header.proptypes = {
   mode: PropTypes.string,
   menuState: PropTypes.number,
+  orderStatus: PropTypes.number,
   submitHandler: PropTypes.func,
 }

@@ -4,7 +4,7 @@
   display: -ms-flex;
   display: -o-flex;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   flex-wrap: wrap;
   clear: both;
 }
