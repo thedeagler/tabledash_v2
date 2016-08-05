@@ -47,6 +47,14 @@ export default class TableView extends Component {
     this.initOrderListener()
   }
 
+  componentDidMount() {
+    let em = new EventDDP('test');
+    em.addListener('done', () => {
+      console.log("DONE!!!!!");
+      this.setState({orderStatus: orderStates.DELIVERING});
+    });
+  }
+
   render() {
     const {
       order,
@@ -137,7 +145,7 @@ export default class TableView extends Component {
       order
     } = this.state
 
-    Meteor.call('sendTableOrder', {tableOrder: order}, (err, res) => {
+    Meteor.call('sendTableOrder', JSON.stringify({data: order}), (err, res) => {
       if(err) {
         console.error(err)
       } else {

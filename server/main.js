@@ -8,7 +8,7 @@ Meteor.startup(() => {
   Meteor.methods({
     sendTableOrder: function(tableOrder) {
       order = tableOrder;
-      console.log('order:', order)
+      console.log('order:', typeof order)
       kitchenOrderStatus = "Pending..."
       em.emit('hello',order);
       return 'success';
@@ -16,8 +16,12 @@ Meteor.startup(() => {
     getStatus: function(){
         	return kitchenOrderStatus;
     },
-    setStatusDone: function(){
-        kitchenOrderStatus = "Done!"
+    setStatusNoOrders: function(){
+        kitchenOrderStatus = "No Orders!"
+    },
+    donePreparing: function(){
+        kitchenOrderStatus = "Done!!"
+     	em.emit('done');   
     }
   });
 });
