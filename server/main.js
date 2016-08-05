@@ -6,7 +6,6 @@ Meteor.startup(() => {
   Meteor.methods({
     sendTableOrder: function(tableOrder) {
       order = tableOrder;
-      console.log('order:', order)
       return 'success';
     }
     getStatus: function(){

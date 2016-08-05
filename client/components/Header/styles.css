@@ -24,13 +24,13 @@
 }
 
 .menuConnecting {
-  color: firebrick;
+  color: gainsboro;
 }
 
 .menuReady {
-  color: darkgreen;
+  color: #ef4e42;
 }
 
 .menuSent {
-  color: black;
+  color: #ef4e42;
 }

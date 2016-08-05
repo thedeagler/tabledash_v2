@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import OrderCard from '../OrderCard'
 import Header from '../Header'
+import Footer from '../Footer'
+import { orderStates } from '../constants.js'
 import './styles.css'
 // import espoly from 'event-source-polyfill'
 
@@ -37,39 +39,60 @@ export default class TableView extends Component {
     super()
     this.state = {
       menuState: 0,
-      order: [[]],
+      orderStatus: orderStates.ORDERING,
+      // order: [[]],
+      order: mockOrder,
       activeCustomer: 0,
     }
     this.initOrderListener()
   }
 
   render() {
-    // const order = mockOrder
     const {
       order,
       activeCustomer,
       menuState,
+      orderStatus,
     } = this.state
 
     return (
       <div>
-        <Header menuState={menuState} submitHandler={ () => {this.submitTableOrder()} }/>
+        <Header
+          menuState={menuState}
+          orderStatus={orderStatus}
+          submitHandler={ () => {this.submitTableOrder()} }
+        />
         <div className='orderCardContainer'>
           {
             order.map((items, customerNumber) => {
               return (
                 <OrderCard
-                  ordering={customerNumber === activeCustomer}
+                  customerOrdering={customerNumber === activeCustomer}
+                  tableOrdering={orderStatus === orderStates.ORDERING}
                   orderNumber={customerNumber + 1}
                   items={items}
+                  activateCustomer={() => {this.changeActiveCustomer(customerNumber)}}
                   key={`order${customerNumber}`}
                 />
               )
             })
           }
         </div>
+        <Footer />
       </div>
     )
+  }
+
+  changeActiveCustomer(customerNumber) {
+    if(customerNumber !== undefined) {
+      this.setState({activeCustomer: customerNumber})
+    } else {
+      const nextCustomer = this.state.activeCustomer + 1
+      this.setState({
+        activeCustomer: nextCustomer,
+        order: orders,
+      })
+    }
   }
 
   initOrderListener() {
@@ -90,8 +113,6 @@ export default class TableView extends Component {
   }
 
   updateOrder(e) {
-    console.log('update event', e)
-
     const customerNumber = this.state.activeCustomer
     const data = JSON.parse(e.data).data
     const items = data.split(',').reduce((customerOrder, selected, itemID) => {
@@ -108,11 +129,7 @@ export default class TableView extends Component {
   submitOrder(e) {
     let orders = this.state.order.slice(0)
     orders.push([])
-    const nextCustomer = this.state.activeCustomer + 1
-    this.setState({
-      activeCustomer: nextCustomer,
-      order: orders,
-    })
+    this.changeActiveCustomer()
   }
 
   submitTableOrder() {
@@ -126,9 +143,8 @@ export default class TableView extends Component {
       } else {
         console.log('Success', res)
       }
-
     })
-    console.log('order:', order)
-    console.log('hey')
+
+    this.setState({orderStatus: orderStates.ORDER_SENT})
   }
 }
