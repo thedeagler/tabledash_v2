@@ -13,13 +13,13 @@ export default class Header extends Component {
     let titleBar
     switch (orderStatus) {
       case orderStates.ORDER_SENT:
-        titleBar = <h1 className='title'>Preparing Order...</h1>
+        titleBar = <h1 className='title' key="title">Order Placed!</h1>
         break;
       case orderStates.ORDERING:
       default:
         titleBar = [
-          <div onClick={submitHandler} className="orderButton">Place Order</div>,
-          <h1 className='title'>Placing Order - {this.renderMenuReadyState(menuState)}</h1>,
+          <div onClick={submitHandler} className="orderButton" key="orderButton">Place Order</div>,
+          <h1 className='title' key="title">Placing Order - {this.renderMenuReadyState(menuState)}</h1>,
         ]
         break;
     }

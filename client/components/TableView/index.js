@@ -66,9 +66,11 @@ export default class TableView extends Component {
             order.map((items, customerNumber) => {
               return (
                 <OrderCard
-                  ordering={customerNumber === activeCustomer}
+                  customerOrdering={customerNumber === activeCustomer}
+                  tableOrdering={orderStatus === orderStates.ORDERING}
                   orderNumber={customerNumber + 1}
                   items={items}
+                  activateCustomer={() => {this.changeActiveCustomer(customerNumber)}}
                   key={`order${customerNumber}`}
                 />
               )
@@ -77,6 +79,18 @@ export default class TableView extends Component {
         </div>
       </div>
     )
+  }
+
+  changeActiveCustomer(customerNumber) {
+    if(customerNumber !== undefined) {
+      this.setState({activeCustomer: customerNumber})
+    } else {
+      const nextCustomer = this.state.activeCustomer + 1
+      this.setState({
+        activeCustomer: nextCustomer,
+        order: orders,
+      })
+    }
   }
 
   initOrderListener() {
@@ -97,8 +111,6 @@ export default class TableView extends Component {
   }
 
   updateOrder(e) {
-    console.log('update event', e)
-
     const customerNumber = this.state.activeCustomer
     const data = JSON.parse(e.data).data
     const items = data.split(',').reduce((customerOrder, selected, itemID) => {
@@ -115,11 +127,7 @@ export default class TableView extends Component {
   submitOrder(e) {
     let orders = this.state.order.slice(0)
     orders.push([])
-    const nextCustomer = this.state.activeCustomer + 1
-    this.setState({
-      activeCustomer: nextCustomer,
-      order: orders,
-    })
+    this.changeActiveCustomer()
   }
 
   submitTableOrder() {

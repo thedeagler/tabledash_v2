@@ -6,15 +6,17 @@ export default class OrderCard extends Component {
   render() {
     const {
       orderNumber,
+      tableOrdering,
       items,
-      ordering
+      customerOrdering,
+      activateCustomer,
     } = this.props
 
     return (
-      <div className={classNames('orderCard', {ordering: ordering})}>
+      <div onClick={activateCustomer} className={classNames('orderCard', {disabled: !tableOrdering || customerOrdering})}>
         <div className='orderCardHeader'>
           <h2 className='customerName'>Customer #{orderNumber}</h2>
-          {this.renderOrderStatus(ordering)}
+          {this.renderOrderStatus(customerOrdering, tableOrdering)}
         </div>
         {
           items.map((item, i) => {
@@ -25,15 +27,18 @@ export default class OrderCard extends Component {
     )
   }
 
-  renderOrderStatus(ordering) {
-    return ordering ?
-      <div className='notReady'>Ordering</div>
-      : <div className='ready'>Ready</div>
+  renderOrderStatus(customerOrdering, tableOrdering) {
+    if(tableOrdering) {
+      return customerOrdering ?
+        <div className='notReady'>Ordering</div>
+        : <div className='ready'>Ready</div>
+    }
   }
 }
 
 OrderCard.proptypes = {
   orderNumber: PropTypes.number,
   items: PropTypes.array,
-  ordering: PropTypes.bool
+  customerOrdering: PropTypes.bool,
+  activateCustomer: PropTypes.func,
 }

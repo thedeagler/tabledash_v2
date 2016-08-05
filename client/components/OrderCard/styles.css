@@ -1,5 +1,5 @@
 .orderCard {
-  border: 1px solid gainsboro;
+  border: 1px solid #ef4e42;
   border-radius: 5px;
   margin: 15px;
   padding: 5px 20px 20px 20px;
@@ -11,8 +11,9 @@
   border: 1.5px solid black;
 }
 
-.orderCard.ordering {
-
+.orderCard.disabled {
+  border: 1px solid gainsboro;
+  pointer-events: none;
 }
 
 .orderCardHeader {
@@ -27,17 +28,17 @@
 
 .customerName {
   margin: 15px 0;
-  color: blue;
+  color: #ef4e42;
 }
 
 .notReady {
   margin-top: auto;
   margin-bottom: auto;
-  color: firebrick;
+  color: darkgrey;
 }
 
 .ready {
   margin-top: auto;
   margin-bottom: auto;
-  color: lightgreen;
+  color: #ef4e42;
 }
