@@ -19,7 +19,7 @@ export default class Header extends Component {
       default:
         titleBar = [
           <div onClick={submitHandler} className="orderButton" key="orderButton">Place Order</div>,
-          <h1 className='title' key="title">Placing Order - {this.renderMenuReadyState(menuState)}</h1>,
+          <h1 className='title' key="title">{this.renderMenuReadyState(menuState)}</h1>,
         ]
         break;
     }
@@ -40,7 +40,7 @@ export default class Header extends Component {
       case 2:
         return <span className='menuSent'>Order placed</span>
       default:
-        return <span className='menuConnecting'>Connecting menus</span>
+        return <span className='menuConnecting'>Please wait. Menus connecting.</span>
     }
   }
 }

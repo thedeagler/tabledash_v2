@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import OrderCard from '../OrderCard'
 import Header from '../Header'
+import Footer from '../Footer'
 import { orderStates } from '../constants.js'
 import './styles.css'
 // import espoly from 'event-source-polyfill'
@@ -77,6 +78,7 @@ export default class TableView extends Component {
             })
           }
         </div>
+        <Footer />
       </div>
     )
   }
