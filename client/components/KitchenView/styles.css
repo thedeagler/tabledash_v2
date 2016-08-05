@@ -1,9 +1,15 @@
-.header {
-  position: relative;
-  text-align: center;
+.orderCardContainer {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  clear: both;
 }
 
-.orderButton {
+.doneButton {
   background-color: #ef4e42;
   position: absolute;
   right: 0;
@@ -16,16 +22,5 @@
   -ms-transform: translateY(-10px);
   -o-transform: translateY(-10px);
   transform: translateY(-10px);
-}
-
-.menuConnecting {
-  color: gainsboro;
-}
-
-.menuReady {
-  color: #ef4e42;
-}
-
-.menuSent {
-  color: #ef4e42;
+  margin-right: 20px;
 }

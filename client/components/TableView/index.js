@@ -3,36 +3,10 @@ import OrderCard from '../OrderCard'
 import Header from '../Header'
 import Footer from '../Footer'
 import { orderStates } from '../constants.js'
+import menu from '../menu.js'
 import './styles.css'
-// import espoly from 'event-source-polyfill'
 
-const mockOrder = [
-  [
-    'Best fish',
-    'Okay fries',
-    'Shit dessert',
-  ], [
-    'Smelly Burger',
-    'Big pickle',
-    'So much ketchup',
-  ], [
-    'Brown Curry',
-    'Brown Rice',
-  ], [
-    'Super burrito',
-    'Orange sauce',
-    'Salty churro',
-    'Square watermelon',
-  ],
-]
-
-const menu = {
-  0: 'flaming hot cheetos',
-  1: 'tejava',
-  2: 'coke zero',
-  3: 'fruit snack',
-  4: 'dried seaweed',
-}
+let orderStream
 
 export default class TableView extends Component {
   constructor() {
@@ -40,8 +14,7 @@ export default class TableView extends Component {
     this.state = {
       menuState: 0,
       orderStatus: orderStates.ORDERING,
-      // order: [[]],
-      order: mockOrder,
+      order: [[]],
       activeCustomer: 0,
     }
     this.initOrderListener()
@@ -50,7 +23,6 @@ export default class TableView extends Component {
   componentDidMount() {
     let em = new EventDDP('test');
     em.addListener('done', () => {
-      console.log("DONE!!!!!");
       this.setState({orderStatus: orderStates.DELIVERING});
     });
   }
@@ -96,6 +68,8 @@ export default class TableView extends Component {
       this.setState({activeCustomer: customerNumber})
     } else {
       const nextCustomer = this.state.activeCustomer + 1
+      let orders = this.state.order.slice(0)
+      orders.push([])
       this.setState({
         activeCustomer: nextCustomer,
         order: orders,
@@ -105,7 +79,7 @@ export default class TableView extends Component {
 
   initOrderListener() {
     const eventSourceURL = 'https://api.particle.io/v1/devices/380052000951343334363138/events?access_token=ca15d603cdd1b53d8a5170874a8e963647c1a8de'
-    const orderStream = new EventSource(eventSourceURL)
+    orderStream = new EventSource(eventSourceURL)
     const streamEvents= {
       UPDATE: '0',
       SUBMIT: '1',
@@ -135,8 +109,6 @@ export default class TableView extends Component {
   }
 
   submitOrder(e) {
-    let orders = this.state.order.slice(0)
-    orders.push([])
     this.changeActiveCustomer()
   }
 
@@ -148,11 +120,11 @@ export default class TableView extends Component {
     Meteor.call('sendTableOrder', JSON.stringify({data: order}), (err, res) => {
       if(err) {
         console.error(err)
-      } else {
-        console.log('Success', res)
       }
+      orderStream.close()
+      let finalOrder = this.state.order.slice(0, -1)
+      this.setState({orderStatus: orderStates.ORDER_SENT, order: finalOrder})
     })
 
-    this.setState({orderStatus: orderStates.ORDER_SENT})
   }
 }
