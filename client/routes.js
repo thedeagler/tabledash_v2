@@ -1,16 +1,18 @@
 import { FlowRouter } from 'meteor/kadira:flow-router';
-
+import React from 'react';
+import App from './App.js';
+import Kitchen from './Kitchen.js';
 
 FlowRouter.route('/kitchen/', {
   name: 'Kitchen',
   action() {
-    render(<Kitchen />, document.getElementById('app'));
+    ReactLayout.render(Kitchen,document.getElementById('app'));
   },
 });
 
 FlowRouter.route('/table/', {
   name: 'App',
   action() {
-    render(<App />, document.getElementById('app'));
+    ReactLayout.render(App,document.getElementById('app'));
   },
 });
