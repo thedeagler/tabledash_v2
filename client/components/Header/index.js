@@ -36,7 +36,7 @@ export default class Header extends Component {
   renderMenuReadyState(readyState) {
     switch(readyState) {
       case 1:
-        return <span className='menuReady'>Ready to order</span>
+        return <span className='menuReady'>Please place your orders.</span>
       case 2:
         return <span className='menuSent'>Order placed</span>
       default:
